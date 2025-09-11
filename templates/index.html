@@ -1,25 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Student Dropout Prediction</title>
+    <meta charset="UTF-8">
+    <title>Dropout Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
-    <h2>Enter Student Details</h2>
-    <form action="/predict" method="post">
-        School: <input type="text" name="School"><br>
-        Gender: <input type="text" name="Gender"><br>
-        Age: <input type="number" name="Age"><br>
-        Number of Failures: <input type="number" name="Number_of_Failures"><br>
-        Travel Time: <input type="number" name="Travel_Time"><br>
-        Study Time: <input type="number" name="Study_Time"><br>
-        Grade 1: <input type="number" name="Grade_1"><br>
-        Grade 2: <input type="number" name="Grade_2"><br>
-        Final Grade: <input type="number" name="Final_Grade"><br>
-        <button type="submit">Predict</button>
-    </form>
+<body class="bg-light">
+<div class="container">
+    <div class="row">
+        <div class="card mt-5 w-100">
+            <div class="card-header text-center">
+                <h1>Student Dropout Prediction</h1>
+            </div>
+            <div class="card-body">
+                <form method="post" action="/">
+                    <div class="form-group">
+                        <label>Curricular units 1st sem (approved):</label>
+                        <input type="number" name="sem1_approved" class="form-control" required>
+                    </div>
 
-    {% if prediction_text %}
-        <h3>{{ prediction_text }}</h3>
-    {% endif %}
+                    <div class="form-group">
+                        <label>Curricular units 2nd sem (approved):</label>
+                        <input type="number" name="sem2_approved" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Curricular units 1st sem (grade):</label>
+                        <input type="number" name="sem1_grade" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Debtor:</label>
+                        <select name="debtor" class="form-control">
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tuition fees up to date:</label>
+                        <select name="tuition" class="form-control">
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Scholarship holder:</label>
+                        <select name="scholarship" class="form-control">
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gender:</label>
+                        <select name="gender" class="form-control">
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Educational special needs:</label>
+                        <select name="special_needs" class="form-control">
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Course:</label>
+                        <select name="course" class="form-control">
+                            {% for course in courses %}
+                                <option value="{{ course }}">{{ course }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Predict</button>
+                </form>
+
+                {% if prediction %}
+                <div class="alert alert-info mt-4 text-center">
+                    <h4>Prediction: {{ prediction }}</h4>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
